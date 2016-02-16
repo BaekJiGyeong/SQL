@@ -85,34 +85,34 @@ WHERE   ROWNUM = 1
 
 -- 27. 다음과 같은 포맷으로 각 부서 별 각 직업 별 연봉 총 합 및 각 부서별 연봉 총 합을 조회한다.
 SELECT  JOB_ID
-        ,NVL((
-        SELECT  SUM(SALARY)
+        ,(
+        SELECT  NVL(SUM(SALARY),0)
         FROM    EMPLOYEES E2
         WHERE   DEPARTMENT_ID = 20
         AND     E.JOB_ID = E2.JOB_ID
-        ),0) AS DEPT20
-        ,NVL((
-        SELECT  SUM(SALARY)
+        ) AS DEPT20
+        ,(
+        SELECT  NVL(SUM(SALARY),0)
         FROM    EMPLOYEES E5
         WHERE   DEPARTMENT_ID = 50
         AND     E.JOB_ID = E5.JOB_ID
-        ),0) AS DEPT50
-        ,NVL((
-        SELECT  SUM(SALARY)
+        ) AS DEPT50
+        ,(
+        SELECT  NVL(SUM(SALARY),0)
         FROM    EMPLOYEES E8
         WHERE   DEPARTMENT_ID = 80
         AND     E.JOB_ID = E8.JOB_ID
-        ),0) AS DEPT80
-        ,NVL((
-        SELECT  SUM(SALARY)
+        ) AS DEPT80
+        ,(
+        SELECT  NVL(SUM(SALARY),0)
         FROM    EMPLOYEES E9
         WHERE   DEPARTMENT_ID = 90
         AND     E.JOB_ID = E9.JOB_ID
-        ),0) AS DEPT90
+        ) AS DEPT90
         ,(
         SELECT  SUM(SALARY)
-        FROM    EMPLOYEES E11
-        WHERE   E.JOB_ID = E11.JOB_ID
+        FROM    EMPLOYEES TE
+        WHERE   E.JOB_ID = TE.JOB_ID
         ) AS TOTAL
 FROM    EMPLOYEES E
 GROUP   BY JOB_ID
