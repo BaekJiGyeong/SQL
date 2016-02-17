@@ -2,6 +2,7 @@
 SELECT  LAST_NAME
 FROM    EMPLOYEES
 WHERE   LAST_NAME LIKE '___a%'
+-- WHERE    SUBSTR (LAST_NAME, 4, 1) = 'a'  서브스트링 사용
 ;
 
 -- 11. LAST_NAME 에 a 및 e 글자가 있는 사원들의 LAST_NAME 을 조회힌다.
@@ -24,7 +25,7 @@ AND     E1.HIRE_DATE < E2.HIRE_DATE
 SELECT  MAX( SALARY )
         , MIN( SALARY )
         , SUM( SALARY )
-        , ROUND(AVG( SALARY ))
+        , ROUND(AVG( SALARY ),1)
 FROM    EMPLOYEES
 ;
 
@@ -52,6 +53,10 @@ WHERE   EMPLOYEE_ID IN ( SELECT  DISTINCT MANAGER_ID
                          FROM    EMPLOYEES
                          WHERE   MANAGER_ID IS NOT NULL
                        )
+;
+
+SELECT  COUNT (DISTINCT MANAGER_ID)
+FROM    EMPLOYEES
 ;
 
 -- 23. 사내의 최대 연봉 및 최소 연봉의 차이를 조회한다.
