@@ -94,7 +94,7 @@ OR      LAST_NAME LIKE '%e%'
 SELECT  LAST_NAME, JOB_TITLE
 FROM    EMPLOYEES, JOBS
 WHERE   SALARY NOT IN ( 2500, 3500, 7000 )
-AND     JOB_TITLE IN ( 'Sales Representative', 'Shipping Clerk' )
+AND     JOB_ID IN ( 'SA_REP', 'ST_CLERK' )
 ;
 
 
@@ -206,6 +206,10 @@ WHERE   EMPLOYEE_ID IN ( SELECT  DISTINCT MANAGER_ID
                        )
 ;
 
+SELECT  COUNT (DISTINCT MANAGER_ID)
+FROM    EMPLOYEES
+;
+
 -- 23. 사내의 최대 연봉 및 최소 연봉의 차이를 조회한다.
 SELECT  MAX(SALARY)-MIN(SALARY) AS DIFF
 FROM    EMPLOYEES
@@ -273,8 +277,7 @@ SELECT  (SELECT COUNT (EMPLOYEE_ID)
          FROM   EMPLOYEES
          WHERE  TO_CHAR(HIRE_DATE,'YYYY')='2008'
         )AS Y2008
-FROM    EMPLOYEES
-WHERE   ROWNUM = 1
+FROM    DUAL
 ;
 
 -- 27. 다음과 같은 포맷으로 각 부서 별 각 직업 별 연봉 총 합 및 각 부서별 연봉 총 합을 조회한다.
@@ -536,16 +539,7 @@ FROM    EMPLOYEES E
             GROUP   BY DEPARTMENT_ID
           )DEP_SAL
 WHERE   E.DEPARTMENT_ID = DEP_SAL.DEPARTMENT_ID
-AND     SALARY > (
-                    SELECT  ROUND(AVG(AVG_SAL))  --각 부서별 평균 연봉
-                    FROM    (
-                              SELECT  DEPARTMENT_ID  --부서별 평균연봉 VIEW
-                                      , ROUND(AVG(SALARY)) AVG_SAL
-                              FROM    EMPLOYEES
-                              WHERE   DEPARTMENT_ID IS NOT NULL
-                              GROUP   BY DEPARTMENT_ID
-                              )DEP_SAL
-                  )
+AND     SALARY > DEP_SAL.AVG_SAL
 ORDER   BY DEP_SAL.AVG_SAL
 ;
 
