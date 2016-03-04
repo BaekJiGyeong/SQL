@@ -1,0 +1,15 @@
+SELECT  *
+FROM    MEMBERS
+;
+
+SELECT  FILE_ID_SEQ.NEXTVAL
+FROM    DUAL
+;
+
+INSERT INTO ARTICLE.MEMBERS (
+   MEMBER_ID, NICK_NAME, PASSWORD, 
+   EMAIL) 
+VALUES ( 'user',
+ '사용자',
+ 'userpassword',
+ '없어요..');
